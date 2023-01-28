@@ -1,8 +1,5 @@
-import { Order } from '@prisma/client'
-import { rejects } from 'assert'
 import express from 'express'
 import { body } from 'express-validator'
-import internal from 'stream'
 import { index, show, store } from '../controllers/orders_controller'
 const router = express.Router()
 
