@@ -29,7 +29,6 @@ model Order {
   customer_email      String @unique
   customer_phone      Int?
   order_total         Int
-  order_date          DateTime @db.Date
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
   orderItems          OrderItem[]
