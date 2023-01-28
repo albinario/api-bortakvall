@@ -28,7 +28,7 @@ model Order {
   customer_city       String
   customer_email      String
   customer_phone      Int?
-  order_total         Int
+  order_total         Int @db.UnsignedInt
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
   orderItems          OrderItem[]
@@ -38,9 +38,9 @@ model OrderItem {
   id          Int @id @default(autoincrement()) @db.UnsignedInt
   product_id  Int @db.UnsignedInt
   product     Product @relation(fields: [product_id], references: [id])
-  qty         Int
-  item_price  Int
-  item_total  Int
+  qty         Int @db.UnsignedInt
+  item_price  Int @db.UnsignedInt
+  item_total  Int @db.UnsignedInt
   order_id    Int @db.UnsignedInt
   order       Order @relation(fields: [order_id], references: [id])
 }
