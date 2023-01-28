@@ -34,7 +34,7 @@ export const show = async (req: Request, res: Response) => {
 	} catch (err) {
 		return res.status(404).send({
 			status: "fail",
-			message: "Not found"
+			message: "Product not found"
 		})
 	}
 }
@@ -42,7 +42,10 @@ export const show = async (req: Request, res: Response) => {
 export const store = async (req: Request, res: Response) => {
 	const validationErrors = validationResult(req)
 	if (!validationErrors.isEmpty()) {
-		return res.status(400).json({ status: "fail", data: validationErrors.array() })
+		return res.status(400).send({
+			status: "fail",
+			data: validationErrors.array()
+		})
 	}
 
 	try {
@@ -62,6 +65,9 @@ export const store = async (req: Request, res: Response) => {
 			data: product
 		})
 	} catch (err) {
-		return res.status(500).send({ status: "error", message: "Something went wrong" })
+		return res.status(500).send({
+			status: "error",
+			message: "Something went wrong"
+		})
 	}
 }
