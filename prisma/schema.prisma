@@ -26,7 +26,7 @@ model Order {
   customer_address    String
   customer_postcode   String @db.Char(6)
   customer_city       String
-  customer_email      String @unique
+  customer_email      String
   customer_phone      Int?
   order_total         Int
   created_at          DateTime @default(now())
