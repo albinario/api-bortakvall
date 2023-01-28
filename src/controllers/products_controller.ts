@@ -13,12 +13,30 @@ export const index = async (req: Request, res: Response) => {
 			data: products
 		})
 	} catch (err) {
-		debug("Error thrown when fetching all products", err)
-		res.status(500).send({ message: "Something went wrong" })
+		res.status(500).send({
+			status: "fail",
+			message: "Something went wrong"
+		})
 	}
 }
 
 export const show = async (req: Request, res: Response) => {
+	try {
+		const product = await prisma.product.findUniqueOrThrow({
+			where: {
+				id: Number(req.params.productId)
+			}
+		})
+		res.send({
+			status: "success",
+			data: product
+		})
+	} catch (err) {
+		return res.status(404).send({
+			status: "error",
+			message: "Not found"
+		})
+	}
 }
 
 export const store = async (req: Request, res: Response) => {
