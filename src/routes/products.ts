@@ -26,7 +26,7 @@ router.post('/', [
 		.isString().withMessage("Stock status has to be a string"),
 	body('stock_quantity')
 		.exists().withMessage("Stock quantity is missing").bail()
-		.isInt({ min: 0 }).withMessage("Stock quantity has to be a positive integer"),
+		.isInt({ min: 0 }).withMessage("Stock quantity has to be an integer"),
 	body('on_sale')
 		.optional()
 		.isBoolean().withMessage("On sale has to be a boolean")
