@@ -1,6 +1,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 import { index, show, store } from '../controllers/orders_controller'
+import prisma from '../prisma'
 const router = express.Router()
 
 router.get('/', index)
@@ -39,7 +40,17 @@ router.post('/', [
 		.isInt().withMessage("Order total must be a number"),
 	body('order_items.*.product_id')
 		.exists().withMessage("Product ID is missing").bail()
-		.isInt({ min: 1 }).withMessage("Product ID has to be a number")
+		.isInt({ min: 1 }).withMessage("Product ID has to be a positive number")
+		.custom(value => prisma.product.findUniqueOrThrow({ where: { id: value}})).withMessage("Product doesn't exist"),
+	body('order_items.*.qty')
+		.exists().withMessage("Quantity is missing").bail()
+		.isInt({ min: 1 }).withMessage("Quantity has to be a positive number"),
+	body('order_items.*.item_price')
+		.exists().withMessage("Item price is missing").bail()
+		.isInt({ min: 1 }).withMessage("Item price has to be a positive number"),
+	body('order_items.*.item_total')
+		.exists().withMessage("Item total is missing").bail()
+		.isInt({ min: 1 }).withMessage("Item total has to be a positive number")
 ], store)
 
 export default router
