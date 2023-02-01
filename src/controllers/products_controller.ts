@@ -1,6 +1,6 @@
 import Debug from 'debug'
 import { Request, Response } from 'express'
-import { validationResult } from 'express-validator'
+import { matchedData, validationResult } from 'express-validator'
 import prisma from '../prisma'
 
 const debug = Debug('prisma-api:products_controller')
@@ -47,17 +47,18 @@ export const store = async (req: Request, res: Response) => {
 			data: validationErrors.array()
 		})
 	}
+	const validData = matchedData(req)
 
 	try {
 		const product = await prisma.product.create({
 			data: {
-				name: req.body.name,
-				description: req.body.description,
-				price: req.body.price,
-				on_sale: req.body.on_sale,
-				images: req.body.images,
-				stock_status: req.body.stock_status,
-				stock_quantity: req.body.stock_quantity
+				name: validData.name,
+				description: validData.description,
+				price: validData.price,
+				on_sale: validData.on_sale,
+				images: validData.images,
+				stock_status: validData.stock_status,
+				stock_quantity: validData.stock_quantity
 			}
 		})
 		res.send({
