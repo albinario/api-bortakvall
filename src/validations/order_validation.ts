@@ -34,7 +34,7 @@ export const orderValidation = [
 	body('order_items.*.product_id')
 		.exists().withMessage("Product ID is missing").bail()
 		.isInt({ min: 1 }).withMessage("Product ID has to be a positive number")
-		.custom(value => prisma.product.findUniqueOrThrow({ where: { id: value}})).withMessage("Product doesn't exist"),
+		.custom(value => prisma.product.findUniqueOrThrow({ where: { id: value }})).withMessage("Product doesn't exist"),
 	body('order_items.*.qty')
 		.exists().withMessage("Quantity is missing").bail()
 		.isInt({ min: 1 }).withMessage("Quantity has to be a positive number"),
