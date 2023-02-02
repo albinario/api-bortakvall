@@ -1,13 +1,13 @@
 import Debug from 'debug'
 import { Request, Response } from 'express'
+import { getProducts, getProduct, createProduct } from '../services/products_service'
 import { matchedData, validationResult } from 'express-validator'
-import prisma from '../prisma'
 
 const debug = Debug('prisma-api:products_controller')
 
 export const index = async (req: Request, res: Response) => {
 	try {
-		const products = await prisma.product.findMany()
+		const products = await getProducts()
 		res.send({
 			status: "success",
 			data: products
@@ -22,11 +22,7 @@ export const index = async (req: Request, res: Response) => {
 
 export const show = async (req: Request, res: Response) => {
 	try {
-		const product = await prisma.product.findUniqueOrThrow({
-			where: {
-				id: Number(req.params.productId)
-			}
-		})
+		const product = await getProduct(Number(req.params.productId))
 		res.send({
 			status: "success",
 			data: product
@@ -50,16 +46,14 @@ export const store = async (req: Request, res: Response) => {
 	const validData = matchedData(req)
 
 	try {
-		const product = await prisma.product.create({
-			data: {
-				name: validData.name,
-				description: validData.description,
-				price: validData.price,
-				on_sale: validData.on_sale,
-				images: validData.images,
-				stock_status: validData.stock_status,
-				stock_quantity: validData.stock_quantity
-			}
+		const product = await createProduct({
+			name: validData.name,
+			description: validData.description,
+			price: validData.price,
+			images: validData.images,
+			stock_status: validData.stock_status,
+			stock_quantity: validData.stock_quantity,
+			on_sale: validData.on_sale
 		})
 		res.send({
 			status: "success",
