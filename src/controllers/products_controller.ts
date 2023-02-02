@@ -9,12 +9,12 @@ export const index = async (req: Request, res: Response) => {
 	try {
 		const products = await getProducts()
 		res.send({
-			status: "success",
+			status: 'success',
 			data: products
 		})
 	} catch (err) {
 		res.status(500).send({
-			status: "error",
+			status: 'error',
 			message: "Something went wrong"
 		})
 	}
@@ -24,12 +24,12 @@ export const show = async (req: Request, res: Response) => {
 	try {
 		const product = await getProduct(Number(req.params.productId))
 		res.send({
-			status: "success",
+			status: 'success',
 			data: product
 		})
 	} catch (err) {
 		return res.status(404).send({
-			status: "fail",
+			status: 'fail',
 			message: "Product not found"
 		})
 	}
@@ -39,7 +39,7 @@ export const store = async (req: Request, res: Response) => {
 	const validationErrors = validationResult(req)
 	if (!validationErrors.isEmpty()) {
 		return res.status(400).send({
-			status: "fail",
+			status: 'fail',
 			data: validationErrors.array()
 		})
 	}
@@ -56,12 +56,12 @@ export const store = async (req: Request, res: Response) => {
 			on_sale: validData.on_sale
 		})
 		res.send({
-			status: "success",
+			status: 'success',
 			data: product
 		})
 	} catch (err) {
 		return res.status(500).send({
-			status: "error",
+			status: 'error',
 			message: "Something went wrong"
 		})
 	}
