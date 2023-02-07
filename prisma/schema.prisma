@@ -31,7 +31,7 @@ model Order {
   order_total         Int @db.UnsignedInt
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
-  orderItems          OrderItem[]
+  order_items         OrderItem[]
 }
 
 model OrderItem {

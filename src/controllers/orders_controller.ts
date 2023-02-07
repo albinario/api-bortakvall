@@ -27,7 +27,7 @@ export const show = async (req: Request, res: Response) => {
 				id: Number(req.params.orderId)
 			},
 			include: {
-				orderItems: true
+				order_items: true
 			}
 		})
 		res.send({
@@ -63,12 +63,12 @@ export const store = async (req: Request, res: Response) => {
 				customer_email: validData.customer_email,
 				customer_phone: validData.customer_phone,
 				order_total: validData.order_total,
-				orderItems: {
+				order_items: {
 					create: validData.order_items
 				}
 			},
 			include: {
-				orderItems: true
+				order_items: true
 			}
 		})
 		res.send({
