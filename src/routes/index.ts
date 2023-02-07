@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
 	res.send({
-		message: "I AM API, BEEP BOOP"
+		message: "I AM ALBIN'S API, BEEP BOOP. Visit /products or /orders for more excitement."
 	})
 })
 
